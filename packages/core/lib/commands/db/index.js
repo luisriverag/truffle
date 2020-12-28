@@ -18,7 +18,10 @@ const command = {
   command: "db",
   description: "Database interface commands",
   builder: function (yargs) {
-    return yargs.commandDir("commands", { recurse: true }).demandCommand();
+    return yargs
+      .command(serveCommand)
+      .command(fetchCommand)
+      .demandCommand();
   },
 
   subCommands: {
