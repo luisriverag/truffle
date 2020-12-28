@@ -59,13 +59,6 @@ const command = {
 
     const { contracts } = await project.loadCompile({ result });
 
-    debug(
-      "contracts %o",
-      contracts.map(({ contractName }) => contractName)
-    );
-    const bytecode = await fetchBytecode(config, address);
-    debug("bytecode %o", bytecode);
-
     const contract = contracts.find(
       contract => contract.contractName === contractName
     );

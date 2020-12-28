@@ -35,23 +35,7 @@ async function fetchSources(config, address) {
 
   //to get the final list, we'll filter out ones that don't support this
   //network (and note ones that yielded errors)
-  let fetchers = [];
-  for (const fetcher of sortedFetchers) {
-    let isValid;
-    let failure = false;
-    try {
-      isValid = await fetcher.isNetworkValid();
-    } catch (_) {
-      isValid = false;
-      failure = true;
-    }
-    if (isValid) {
-      fetchers.push(fetcher);
-    }
-    if (failure) {
-      badFetchers.push(fetcher.fetcherName);
-    }
-  }
+  const fetchers = sortedFetchers;
 
   //(not set if there is no source)
   for (const fetcher of fetchers) {
