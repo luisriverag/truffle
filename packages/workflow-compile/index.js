@@ -93,12 +93,7 @@ const WorkflowCompile = {
 
   async compileAndSave(options) {
     const {contracts, sources, compilations} = await this.compile(options);
-    await this.save(options, {contracts, compilations});
-    return {
-      contracts,
-      sources,
-      compilations
-    };
+
     return await this.save(options, {contracts, sources, compilations});
   },
 
@@ -108,6 +103,7 @@ const WorkflowCompile = {
     await fse.ensureDir(config.contracts_build_directory);
 
     if (options.db && options.db.enabled === true && contracts.length > 0) {
+      debug("saving to @truffle/db");
       const db = connect(config);
       const project = await Project.initialize({
         db,
@@ -116,14 +112,12 @@ const WorkflowCompile = {
         }
       });
       ({contracts, compilations} = await project.loadCompile({
-        result: {contracts, compilations}
+        result: {contracts, sources, compilations}
       }));
     }
 
     const artifacts = contracts.map(Shims.NewToLegacy.forContract);
     await config.artifactor.saveAll(artifacts);
-
-    debug("contracts %o", contracts);
 
     return { contracts, sources, compilations };
   },
