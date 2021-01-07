@@ -1,5 +1,5 @@
 import { logger } from "@truffle/db/logger";
-const debug = logger("db:pouch:leveldown");
+const debug = logger("db:meta:pouch:leveldown");
 
 import path from "path";
 import fse from "fs-extra";
@@ -7,7 +7,7 @@ import PouchDB from "pouchdb";
 import leveldown from "leveldown";
 import PouchDBAdapterLevelDB from "pouchdb-adapter-leveldb";
 
-import { Collections } from "@truffle/db/meta";
+import { Collections } from "@truffle/db/meta/collections";
 import { Databases } from "./databases";
 
 export class LeveldownDatabases<C extends Collections> extends Databases<C> {
